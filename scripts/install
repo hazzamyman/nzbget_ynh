@@ -127,6 +127,13 @@ yunohost service add $app --description="Efficient Usenet Downloader" --log="/va
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
 
+mkdir -p "$install_dir/.config/nzbget/"
+
+ynh_add_config --template="../conf/qBittorrent.conf" --destination="$install_dir/.config/nzbget/nzbget.conf"
+
+chown $app: -R "$install_dir/.config/"
+chmod 600 "$install_dir/.config/nzbget/nzbget.conf"
+
 # Create a dedicated Fail2Ban config
 #ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
 
