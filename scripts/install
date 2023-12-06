@@ -129,7 +129,7 @@ ynh_use_logrotate
 
 mkdir -p "$install_dir/.config/nzbget/"
 
-ynh_add_config --template="../conf/qBittorrent.conf" --destination="$install_dir/.config/nzbget/nzbget.conf"
+ynh_add_config --template="../conf/nzbget.conf" --destination="$install_dir/.config/nzbget/nzbget.conf"
 
 chown $app: -R "$install_dir/.config/"
 chmod 600 "$install_dir/.config/nzbget/nzbget.conf"
