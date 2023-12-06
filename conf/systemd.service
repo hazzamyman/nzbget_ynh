@@ -9,7 +9,11 @@ Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
 #ExecStart=__INSTALL_DIR__/scripts/nzbget
 #from NZBget forum
-ExecStart=/usr/bin/nzbget --webui-port=__PORT__
+ExecStart=/usr/bin/nzbget -D
+#ExecStart=/home/aurelie/nzbget/nzbget -D
+ExecStop=/usr/bin/nzbget -Q
+ExecReload=/usr/bin/nzbget -O
+
 #ExecStop=/usr/local/bin/nzbget -Q
 
 StandardOutput=append:/var/log/__APP__/__APP__.log
