@@ -1,9 +1,10 @@
 [Unit]
-Description=Useful Usenet Tool
-After=network.target
+Description=NZBGet service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
-Type=simple
+Type=forking
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
