@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_docker_image_extract
 source /usr/share/yunohost/helpers
 
 # Install parameters are automatically saved as settings
@@ -37,22 +38,17 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=1
 
-### `ynh_setup_source` is used to install an app from a zip or tar.gz file,
-### downloaded from an upstream source, like a git repository.
-### `ynh_setup_source` use the file manifest.toml
+_download_nzbget_from_docker
 
-# Download, check integrity, uncompress and patch the source from manifest.toml
-#ynh_setup_source --dest_dir="$install_dir"
+#=================================================
+# ADD A CONFIGURATION FILE
+#=================================================
+ynh_script_progression --message="Adding a configuration file..."
 
-# $install_dir will automatically be initialized with some decent 
-# permission by default ... however, you may need to recursively reapply
-# ownership to all files such as after the ynh_setup_source step
-chown -R $app:www-data "$install_dir"
+ynh_add_config --template="nzbget.env" --destination="$install_dir/live/.env"
 
-wget https://nzbget.net/download/nzbget-latest-bin-linux.run
-
-sh nzbget-latest-bin-linux.run
-
+chmod 400 "$install_dir/live/.env"
+chown $app:$app "$install_dir/live/.env"
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
@@ -127,12 +123,12 @@ yunohost service add $app --description="Efficient Usenet Downloader" --log="/va
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
 
-mkdir -p "$install_dir/.config/nzbget/"
+#mkdir -p "$install_dir/.config/nzbget/"
 
-ynh_add_config --template="../conf/nzbget.conf" --destination="$install_dir/.config/nzbget/nzbget.conf"
+#ynh_add_config --template="../conf/nzbget.conf" --destination="$install_dir/.config/nzbget/nzbget.conf"
 
-chown $app: -R "$install_dir/.config/"
-chmod 600 "$install_dir/.config/nzbget/nzbget.conf"
+#chown $app: -R "$install_dir/.config/"
+#chmod 600 "$install_dir/.config/nzbget/nzbget.conf"
 
 # Create a dedicated Fail2Ban config
 #ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
