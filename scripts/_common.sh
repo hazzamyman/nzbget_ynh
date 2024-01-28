@@ -9,12 +9,7 @@
 #=================================================
 _download_nzbget_from_docker() {
     docker_image="linuxserver/nzbget"
-    debian=$(lsb_release --codename --short)
-    if [[ $debian = "bullseye" ]]; then
-        docker_version="$(ynh_app_upstream_version)"
-    elif [[ $debian = "bookworm" ]]; then
-        docker_version="$(ynh_app_upstream_version)-alpine"
-    fi
+
 
     docker_arg=""
     # Fixup for armhf
