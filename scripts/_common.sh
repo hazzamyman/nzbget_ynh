@@ -9,8 +9,9 @@
 #=================================================
 _download_nzbget_from_docker() {
 
-ynh_docker_image_extract --dest_dir="$install_dir" --image_spec="nzbget:latest"
-]
+ynh_docker_image_extract --dest_dir="$install_dir" --image_spec="linuxserver/nzbget:latest"
+
+
     # Move files from the extract to the live directory
     ynh_secure_remove --file="$install_dir/live/"
     mkdir -p "$install_dir/live/"
